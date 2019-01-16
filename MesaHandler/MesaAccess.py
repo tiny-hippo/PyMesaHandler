@@ -3,16 +3,17 @@ from MesaHandler.support import *
 
 from collections import OrderedDict
 
+
 class MesaAccess:
     def __init__(self):
         self.mesaFileAccess = MesaFileAccess()
 
         self._fullDict = self.stripFullDict()
 
-    def stripToDict(self,section):
+    def stripToDict(self, section):
         retDict = OrderedDict()
-        for file,parameterDict in self.mesaFileAccess.dataDict[section].items():
-            for key,value in parameterDict.items():
+        for file, parameterDict in self.mesaFileAccess.dataDict[section].items():
+            for key, value in parameterDict.items():
                 retDict[key] = value
 
         return retDict
@@ -20,7 +21,7 @@ class MesaAccess:
     def stripFullDict(self):
         retDict = OrderedDict()
 
-        for section in [sectionStarJob,sectionControl,sectionPgStar]:
+        for section in [sectionStarJob, sectionControl, sectionPgStar]:
             retDict.update(self.stripToDict(section))
 
         return retDict
@@ -38,7 +39,7 @@ class MesaAccess:
         if key in self._fullDict.keys():
             self.mesaFileAccess[key] = value
         else:
-            self.mesaFileAccess.addValue(key,value)
+            self.mesaFileAccess.addValue(key, value)
 
         self._fullDict = self.stripFullDict()
 
