@@ -49,15 +49,18 @@ class IMesaInterface:
         elif isinstance(data, str):
             return "'" + data + "'"
         elif isinstance(data, float) or isinstance(data, int):
-            datastr = '{:.4E}'.format(data)
-            if(int(datastr[-1]) >= 2 or int(datastr[-2]) != 0):
-                datastr = datastr.replace('E', 'd')
-                if('+' in datastr):
-                    datastr = datastr.replace('+', '')
-                if(int(datastr[-2]) == 0):
-                    datastr = datastr[:-2] + datastr[-1:]
+            if(data.is_integer()):
+                datastr = '{:.0f}'.format(data)
             else:
-                datastr = str(data)
+                datastr = '{:.4E}'.format(data)
+                if(int(datastr[-1]) >= 2 or int(datastr[-2]) != 0):
+                    datastr = datastr.replace('E', 'd')
+                    if('+' in datastr):
+                        datastr = datastr.replace('+', '')
+                    if(int(datastr[-2]) == 0):
+                        datastr = datastr[:-2] + datastr[-1:]
+                else:
+                    datastr = str(data)
             return datastr
         else:
             raise AttributeError("Cannot convert type " + str(type(data)) +

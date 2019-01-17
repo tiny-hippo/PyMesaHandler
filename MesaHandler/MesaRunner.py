@@ -152,7 +152,7 @@ class MesaRunner:
 
     @staticmethod
     def clean_logs():
-        """ Cleans the photos, png and logs folders at once. """
+        """ Cleans the photos, png and logs directories. """
         dir_name = 'png'
         items = os.listdir(dir_name)
         for item in items:
