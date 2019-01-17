@@ -40,7 +40,7 @@ class MesaFileAccess(IMesaInterface):
                     if isinstance(value, bool):
                         regex = r"(" + key + r".+ =)\s* ([\. \w \.]+)"
                     elif isinstance(value, str):
-                        regex = r"(" + key + r".+ =)\s* ([\w]+ ')"
+                        regex = r"(" + key + r".+ =)\s* ([\w_ ']+)"
                     elif isinstance(value, float) or isinstance(value, int):
                         regex = r"(" + key + r".+ =)\s*" + regex_floatingValue
                     else:

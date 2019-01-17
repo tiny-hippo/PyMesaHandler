@@ -3,17 +3,18 @@ from shutil import copyfile
 from MesaHandler import MesaAccess
 
 
-class MesaInlist(object):
+class MesaInlist:
     """ Changes the inlist settings of a file with a given name.
 
     Alternatively, it creates a list of all the inlists in the
     current directory, which can be used to iteratetively edit
-    all inslists at once.
+    all inlists at once.
 
     Attributes:
         inlist_name (str): Inlist filename
         inlists (list):  List of all the inlists in the directory
-        inlist (obj): The MesaAccess that is used to manipulate the inlists.
+        inlist (obj): The MesaAccess object that is used to manipulate
+                      the inlists.
     """
     def __init__(self):
         self.inlist_name = ''

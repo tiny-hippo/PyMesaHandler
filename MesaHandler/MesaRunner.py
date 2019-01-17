@@ -4,12 +4,12 @@ import sys
 import glob
 import subprocess
 import datetime
-from shutil import copyfile, move
+from shutil import copy2, move
 from distutils.dir_util import copy_tree
 from MesaHandler import MesaAccess
 
 
-class MesaRunner(object):
+class MesaRunner:
     """ Runs MESA using the desired inlist.
 
     It is also capable of various other useful manipulations.
@@ -60,7 +60,7 @@ class MesaRunner(object):
         """
         self.remove_file('inlist')
         self.remove_file('restart_photo')
-        copyfile(inlist, 'inlist')
+        copy2(inlist, 'inlist')
         ma = MesaAccess()
         self.model_name = ma['save_model_filename']
         self.profile_name = ma['filename_for_profile_when_terminate']
@@ -87,15 +87,30 @@ class MesaRunner(object):
         run_time = end_time - start_time
 
         if(os.path.isfile(self.model_name)):
-            print(42 * '-')
+            print(42 * '%')
             print('Evolving the star took:', run_time)
-            print(42 * '-')
+            print(42 * '%')
             self.check = True
         else:
-            print(42 * '-')
+            print(42 * '%')
             print('Failed to run', self.inlist)
-            print(42 * '-')
+            print(42 * '%')
             self.check = False
+
+    def restart(self, photo):
+        """ Restarts the run from the given photo.
+
+        Args:
+            photo (str): Photo to run from in the photos directory.
+        """
+        if not(os.path.isfile('inlist')):
+            copy2(self.last_inlist, 'inlist')
+
+        photo_path = os.path.join('photos', photo)
+        if(os.path.isfile(photo_path)):
+            subprocess.call(['./re', photo])
+        else:
+            print(photo_path, 'not found')
 
     def restart_latest(self):
         """ Restarts the run from the latest photo. """
@@ -106,13 +121,13 @@ class MesaRunner(object):
         os.chdir(old_path)
 
         if not(os.path.isfile('inlist')):
-            copyfile(self.last_inlist, 'inlist')
+            copy2(self.last_inlist, 'inlist')
 
         if(latest_file):
             print('Restarting with photo', latest_file)
             subprocess.call(['./re', latest_file])
         else:
-            print('No photo found')
+            print('No photo found.')
 
     def copy_logs(self, dir_name):
         """ Save the current logs and profile.
@@ -134,19 +149,6 @@ class MesaRunner(object):
         """ Builds the star executable. """
         print('Building star')
         subprocess.call('./mk')
-
-    @staticmethod
-    def restart(photo):
-        """ Restarts the run from the  given photo.
-
-        Args:
-            photo (str): Photo to run from in the photos directory.
-        """
-        photo_path = os.path.join('photos', photo)
-        if(os.path.isfile(photo_path)):
-            subprocess.call(['./re', photo])
-        else:
-            print(photo_path, 'not found')
 
     @staticmethod
     def clean_logs():
