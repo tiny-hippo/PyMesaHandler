@@ -49,7 +49,9 @@ class IMesaInterface:
         elif isinstance(data, str):
             return "'" + data + "'"
         elif isinstance(data, float) or isinstance(data, int):
-            if(data.is_integer()):
+            if(isinstance(data, int)):
+                datastr = '{:.0f}'.format(data)
+            elif(data.is_integer()):
                 datastr = '{:.0f}'.format(data)
             else:
                 datastr = '{:.4E}'.format(data)
