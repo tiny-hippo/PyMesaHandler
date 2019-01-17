@@ -1,8 +1,10 @@
 import os
 
+
 class cd:
     """
-    Directory changer. can change the directory using the 'with' keyword, and returns to the previous path
+    Directory changer. Can change the directory using the
+    'with' keyword, and returns to the previous path
     after leaving intendation. Example:
 
     with cd("some/path/to/go"): # changing dir

@@ -76,7 +76,7 @@ class MesaFileAccess(IMesaInterface):
             self.__setitem__(key, parmValue)
         else:
             regex = r"(&" + section + r"[\w_\s\.\'\=\!\(\)\/\>\<\-\,]+)(\/)"
-            substring = (r"\1\n    " + key + "=" + 
+            substring = (r"\1\n    " + key + "=" +
                          self.convertToFortranType(value) + r"\n\2")
             self.rewriteFile(usedFile, regex, substring)
             self.dataDict[section][usedFile][key] = parmValue

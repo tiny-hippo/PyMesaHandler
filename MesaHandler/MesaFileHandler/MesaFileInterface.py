@@ -51,8 +51,6 @@ class IMesaInterface:
         elif isinstance(data, float) or isinstance(data, int):
             if(isinstance(data, int)):
                 datastr = '{:.0f}'.format(data)
-            elif(data.is_integer()):
-                datastr = '{:.0f}'.format(data)
             else:
                 datastr = '{:.4E}'.format(data)
                 if(int(datastr[-1]) >= 2 or int(datastr[-2]) != 0):
