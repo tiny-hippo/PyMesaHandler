@@ -153,24 +153,33 @@ class MesaRunner:
         subprocess.call('./mk')
 
     @staticmethod
-    def clean_logs():
-        """ Cleans the photos, png and logs directories. """
-        dir_name = 'png'
-        items = os.listdir(dir_name)
-        for item in items:
-            if(item.endswith('.png')):
-                os.remove(os.path.join(dir_name, item))
+    def cleanup(keep_png=False, keep_logs=False, keep_photos=True):
+        """ Cleans the photos, png and logs directories.
 
-        dir_name = 'LOGS'
-        items = os.listdir(dir_name)
-        for item in items:
-            if(item.endswith('.data')):
-                os.remove(os.path.join(dir_name, item))
+        Args:
+            keep_png (bool): Store/delete the png directory.
+            keep_logs (bool): Store/delete the logs directory.
+            keep_photos (bool): Store/delete the photo directory.
+        """
+        if not(keep_png):
+            dir_name = 'png'
+            items = os.listdir(dir_name)
+            for item in items:
+                if(item.endswith('.png')):
+                    os.remove(os.path.join(dir_name, item))
 
-        dir_name = 'photos'
-        items = os.listdir(dir_name)
-        for item in items:
-            os.remove(os.path.join(dir_name, item))
+        if not(keep_logs):
+            dir_name = 'LOGS'
+            items = os.listdir(dir_name)
+            for item in items:
+                if(item.endswith('.data')):
+                    os.remove(os.path.join(dir_name, item))
+
+        if not(keep_photos):
+            dir_name = 'photos'
+            items = os.listdir(dir_name)
+            for item in items:
+                os.remove(os.path.join(dir_name, item))
 
     @staticmethod
     def remove_file(file_name):
