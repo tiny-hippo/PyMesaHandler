@@ -50,7 +50,7 @@ class MesaRunner:
                     print('Aborting since previous inlist failed to run')
                     raise SystemExit()
 
-            print('Finished running all inlists')
+            print('Finished running inlists', self.inlist)
         else:
             self.run_support(self.inlist)
 
