@@ -164,23 +164,26 @@ class MesaRunner:
         """
         if not(keep_png):
             dir_name = 'png'
-            items = os.listdir(dir_name)
-            for item in items:
-                if(item.endswith('.png')):
-                    os.remove(os.path.join(dir_name, item))
+            if(os.path.isdir(dir_name)):
+                items = os.listdir(dir_name)
+                for item in items:
+                    if(item.endswith('.png')):
+                        os.remove(os.path.join(dir_name, item))
 
         if not(keep_logs):
             dir_name = 'LOGS'
-            items = os.listdir(dir_name)
-            for item in items:
-                if(item.endswith('.data')):
-                    os.remove(os.path.join(dir_name, item))
+            if(os.path.isdir(dir_name)):
+                items = os.listdir(dir_name)
+                for item in items:
+                    if(item.endswith('.data')):
+                        os.remove(os.path.join(dir_name, item))
 
         if not(keep_photos):
             dir_name = 'photos'
-            items = os.listdir(dir_name)
-            for item in items:
-                os.remove(os.path.join(dir_name, item))
+            if(os.path.isdir(dir_name)):
+                items = os.listdir(dir_name)
+                for item in items:
+                    os.remove(os.path.join(dir_name, item))
 
     @staticmethod
     def remove_file(file_name):

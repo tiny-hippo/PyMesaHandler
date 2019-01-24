@@ -35,21 +35,15 @@ class IMesaInterface:
                 matches = matches.replace('D', 'E')
             matches = float(matches)
             if(matches.is_integer()):
-                return int(matches)
+                if('.' in str(matches)):
+                    return float(matches)
+                else:
+                    return int(matches)
             else:
                 return float(matches)
         else:
             raise AttributeError("Cannot convert " + data +
                                  "to known type!")
-        # is this still useful?
-        # elif "." in data:
-        #     return float(data)
-        # else:
-        #     try:
-        #         return int(data)
-        #     except:
-        #         raise AttributeError("Cannot convert " + data +
-        #                              " to known type!")
 
     def convertToFortranType(self, data):
         if isinstance(data, bool):
