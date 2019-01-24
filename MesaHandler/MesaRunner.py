@@ -91,7 +91,7 @@ class MesaRunner:
 
         if(os.path.isfile(self.model_name)):
             print(42 * '%')
-            print('Evolving the star took:', run_time[:micro_index])
+            print('Evolving the star took: {} h:mm:ss', run_time[:micro_index])
             print(42 * '%')
             self.check = True
         else:
