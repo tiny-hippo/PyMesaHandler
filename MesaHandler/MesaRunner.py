@@ -86,11 +86,12 @@ class MesaRunner:
             print('You need to build star first!')
             sys.exit()
         end_time = datetime.datetime.now()
-        run_time = end_time - start_time
+        run_time = str(end_time - start_time)
+        micro_index = run_time.find('.')
 
         if(os.path.isfile(self.model_name)):
             print(42 * '%')
-            print('Evolving the star took:', run_time)
+            print('Evolving the star took:', run_time[:micro_index])
             print(42 * '%')
             self.check = True
         else:
