@@ -39,5 +39,7 @@ class MesaEnvironmentHandler(IMesaInterface):
                     raise TypeError("Type of value for parameter " +
                                     parameter + " is wrong, expected type " +
                                     str(type(value)))
+            #  to-do: Add exception for controls like x_ctrl(1); these
+            #  don't work right now
 
         return "", value
