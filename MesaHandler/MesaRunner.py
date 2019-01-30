@@ -54,8 +54,8 @@ class MesaRunner:
                 self.run_support(item)
                 self.summary[ind] = self.convergence
                 if not(self.convergence):
-                    print('Aborting since previous inlist failed to run')
-                    raise SystemExit()
+                    raise SystemExit('Aborting since', item,
+                                     'failed to converge')
 
             print('Finished running inlists', self.inlist)
         else:
@@ -65,7 +65,7 @@ class MesaRunner:
         """ Helper function for running MESA.
 
         args:
-            inlist (str): Inlist to be run.
+            inlist (str): Inlist to run.
         """
         self.remove_file('inlist')
         self.remove_file('restart_photo')
