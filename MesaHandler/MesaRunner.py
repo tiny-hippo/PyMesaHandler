@@ -49,7 +49,7 @@ class MesaRunner:
     def run(self):
         """ Runs either a single inlist or a list of inlists. """
         if(isinstance(self.inlist, list)):
-            for ind, item in self.inlist:
+            for ind, item in enumerate(self.inlist):
                 self.last_inlist = item
                 self.run_support(item)
                 self.summary[ind] = self.convergence
