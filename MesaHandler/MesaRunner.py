@@ -4,6 +4,7 @@ import sys
 import glob
 import subprocess
 import datetime
+import numpy as np
 from shutil import copy2, move
 from distutils.dir_util import copy_tree
 from MesaHandler import MesaAccess
@@ -36,17 +37,23 @@ class MesaRunner:
         self.last_inlist = inlist
         self.pause = pause
         self.pgstar = pgstar
-        self.check = False
         self.model_name = ''
         self.profile_name = ''
+
+        self.convergence = False
+        if(isinstance(self.inlist, list)):
+            self.summary = np.zeros_like(self.inlist, dtype=bool)
+        else:
+            self.summary = False
 
     def run(self):
         """ Runs either a single inlist or a list of inlists. """
         if(isinstance(self.inlist, list)):
-            for item in self.inlist:
+            for ind, item in self.inlist:
                 self.last_inlist = item
                 self.run_support(item)
-                if not(self.check):
+                self.summary[ind] = self.convergence
+                if not(self.convergence):
                     print('Aborting since previous inlist failed to run')
                     raise SystemExit()
 
@@ -94,12 +101,13 @@ class MesaRunner:
             print('Evolving the star took: {} \
                    h:mm:ss'.format(run_time[:micro_index]))
             print(42 * '%')
-            self.check = True
+            self.convergence = True
         else:
             print(42 * '%')
-            print('Failed to run', self.inlist)
+            print('Failed to run', inlist,
+                  'after {} h:mm:ss'.format(run_time[:micro_index]))
             print(42 * '%')
-            self.check = False
+            self.convergence = False
 
     def restart(self, photo):
         """ Restarts the run from the given photo.
