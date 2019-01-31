@@ -39,6 +39,7 @@ class MesaRunner:
         self.pgstar = pgstar
         self.model_name = ''
         self.profile_name = ''
+        self.run_time = 0
 
         self.convergence = False
         if(isinstance(self.inlist, list)):
@@ -94,12 +95,13 @@ class MesaRunner:
             sys.exit()
         end_time = datetime.datetime.now()
         run_time = str(end_time - start_time)
+        self.run_time = run_time
         micro_index = run_time.find('.')
 
         if(os.path.isfile(self.model_name)):
             print(42 * '%')
-            print('Evolving the star took: {} \
-                   h:mm:ss'.format(run_time[:micro_index]))
+            print('Evolving the star took:',
+                  '{} h:mm:ss'.format(run_time[:micro_index]))
             print(42 * '%')
             self.convergence = True
         else:
@@ -184,7 +186,7 @@ class MesaRunner:
             if(os.path.isdir(dir_name)):
                 items = os.listdir(dir_name)
                 for item in items:
-                    if(item.endswith('.data')):
+                    if(item.endswith('.data') or item.endswith('.index')):
                         os.remove(os.path.join(dir_name, item))
 
         if not(keep_photos):

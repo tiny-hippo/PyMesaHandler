@@ -51,16 +51,14 @@ class MesaEnvironmentHandler(IMesaInterface):
                     else:
                         suffix = '(:)'
                     p = prefix + suffix
-                else:
-                    return "", value
 
-                if(p in paramDict.keys()):
-                    if(value is None or type(value) == type(paramDict[p])):
-                        return section, paramDict[p]
+                    if(p in paramDict.keys()):
+                        if(value is None or type(value) == type(paramDict[p])):
+                            return section, paramDict[p]
                     else:
                         raise TypeError('Type of value for parameter ' +
                                         p + ' is wrong, expected type ' +
-                                        str(type(value)))                    
+                                        str(type(value)))
             #  to-do: Add exception for controls like x_ctrl(1).
             #  Perhaps re.sub is a better solution?
 
