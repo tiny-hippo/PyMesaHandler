@@ -22,13 +22,11 @@ class MesaFileAccess(IMesaInterface):
     def readSections(self, filename, section):
         content = self.readFile(filename)
         p = re.compile(regex_sections)
-
         for matches in p.findall(content):
             if section is not None and section != matches[0]:
                 continue
 
             self.dataDict[section][filename] = self.getParameters(matches[1])
-
             for externalFile in set(self.dataDict[section][filename].keys()).intersection(external_file_parameters):
                 self.readSections(self.dataDict[section][filename][externalFile], section)
 

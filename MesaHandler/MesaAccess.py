@@ -40,7 +40,6 @@ class MesaAccess:
             self.mesaFileAccess[key] = value
         else:
             self.mesaFileAccess.addValue(key, value)
-
         self._fullDict = self.stripFullDict()
 
     def __delitem__(self, key):

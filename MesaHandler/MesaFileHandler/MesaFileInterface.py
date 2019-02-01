@@ -17,7 +17,6 @@ class IMesaInterface:
             if len(matches) != 2:
                 raise AttributeError("Regex needs to match 2 items here! \
                                       Found " + str(len(matches)))
-
             parameters[matches[0]] = self.convertToPythonTypes(matches[1])
 
         return parameters
