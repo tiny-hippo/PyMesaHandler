@@ -39,9 +39,10 @@ class MesaEnvironmentHandler(IMesaInterface):
                 if value is None or type(value) == type(paramDict[parameter]):
                     return section, paramDict[parameter]
                 else:
-                    raise TypeError("Type of value for parameter " +
-                                    parameter + " is wrong, expected type " +
-                                    str(type(value)))
+                        raise TypeError('Type ' + str(type(value)) +
+                                        ' for parameter ' + parameter +
+                                        ' is wrong, expected type ' +
+                                        str(type(paramDict[parameter])))
             else:
                 match = re.search(regex, parameter, re.VERBOSE)
                 if(match):
@@ -55,10 +56,11 @@ class MesaEnvironmentHandler(IMesaInterface):
                     if(p in paramDict.keys()):
                         if(value is None or type(value) == type(paramDict[p])):
                             return section, paramDict[p]
-                    else:
-                        raise TypeError('Type of value for parameter ' +
-                                        p + ' is wrong, expected type ' +
-                                        str(type(value)))
+                        else:
+                            raise TypeError('Type ' + str(type(value)) +
+                                            ' for parameter ' + p +
+                                            ' is wrong, expected type ' +
+                                            str(type(paramDict[parameter])))
             #  to-do: Add exception for controls like x_ctrl(1).
             #  Perhaps re.sub is a better solution?
 
