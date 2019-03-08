@@ -3,7 +3,9 @@ from collections import OrderedDict
 
 from MesaHandler.support import *
 from MesaHandler.MesaFileHandler.MesaFileInterface import IMesaInterface
-from MesaHandler.MesaFileHandler.MesaEnvironmentHandler import MesaEnvironmentHandler
+from MesaHandler.MesaFileHandler.MesaEnvironmentHandler import (
+    MesaEnvironmentHandler
+)
 
 
 class MesaFileAccess(IMesaInterface):
@@ -27,8 +29,12 @@ class MesaFileAccess(IMesaInterface):
                 continue
 
             self.dataDict[section][filename] = self.getParameters(matches[1])
-            for externalFile in set(self.dataDict[section][filename].keys()).intersection(external_file_parameters):
-                self.readSections(self.dataDict[section][filename][externalFile], section)
+            for externalFile in (
+                    set(self.dataDict[section][filename].keys())
+                    .intersection(external_file_parameters)):
+                self.readSections(
+                    self.dataDict[section][filename][externalFile],
+                    section)
 
     def __setitem__(self, key, value):
         for section in sections:
@@ -63,7 +69,8 @@ class MesaFileAccess(IMesaInterface):
                            before adding it to the inlist files")
 
         parmValue = parmValue if value is None else value
-        subset = list(set(self.dataDict[section]["inlist"].keys()).intersection(set(external_file_parameters)))
+        subset = list(set(self.dataDict[section]["inlist"].keys())
+                      .intersection(set(external_file_parameters)))
 
         if len(subset) != 0:
             usedFile = self.dataDict[section]["inlist"][subset[0]]
