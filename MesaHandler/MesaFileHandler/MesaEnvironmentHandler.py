@@ -36,7 +36,11 @@ class MesaEnvironmentHandler(IMesaInterface):
         x_ctrls = ['x_ctrl', 'x_integer_ctrl', 'x_logical_ctrl']
         for section, paramDict in self.dataDict.items():
             if parameter in paramDict.keys():
-                if value is None or type(value) == type(paramDict[parameter]):
+                if (value is None or
+                        type(value) == type(paramDict[parameter])):
+                    return section, paramDict[parameter]
+                elif (isinstance(value, int) and
+                        isinstance(paramDict[parameter], float)):
                     return section, paramDict[parameter]
                 else:
                         raise TypeError('Type ' + str(type(value)) +
@@ -54,14 +58,17 @@ class MesaEnvironmentHandler(IMesaInterface):
                     p = prefix + suffix
 
                     if(p in paramDict.keys()):
-                        if(value is None or type(value) == type(paramDict[p])):
+                        if (value is None or
+                                type(value) == type(paramDict[p])):
                             return section, paramDict[p]
+                        elif (isinstance(value, int) and
+                                isinstance(paramDict[parameter], float)):
+                            return section, paramDict[parameter]
                         else:
                             raise TypeError('Type ' + str(type(value)) +
                                             ' for parameter ' + p +
                                             ' is wrong, expected type ' +
                                             str(type(paramDict[parameter])))
-            #  to-do: Add exception for controls like x_ctrl(1).
             #  Perhaps re.sub is a better solution?
 
         return "", value
