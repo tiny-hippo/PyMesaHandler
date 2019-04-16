@@ -62,8 +62,8 @@ class MesaEnvironmentHandler(IMesaInterface):
                                 type(value) == type(paramDict[p])):
                             return section, paramDict[p]
                         elif (isinstance(value, int) and
-                                isinstance(paramDict[parameter], float)):
-                            return section, paramDict[parameter]
+                                isinstance(paramDict[p], float)):
+                            return section, paramDict[p]
                         else:
                             raise TypeError('Type ' + str(type(value)) +
                                             ' for parameter ' + p +

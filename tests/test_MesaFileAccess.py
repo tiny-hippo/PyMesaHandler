@@ -84,6 +84,14 @@ def testObject(defaultSetup: MesaFileAccess):
     object.addValue("saved_model_for_merger_1","text")
     assert object["star_job"]["inlist_project"]["saved_model_for_merger_1"] == "text"
     object.removeValue("saved_model_for_merger_1")
+
+    # additional tests
+    object.addValue("x_ctrl(1)", 0.5)
+    assert object["controls"]["inlist_project"]["x_ctrl(1)"] == 0.5
+    object.addValue("xa_mesh_delta_coeff(1)", 0.75)
+    assert object["controls"]["inlist_project"]["xa_mesh_delta_coeff(1)"] == 0.75
+    object.addValue("max_model_number", 12000)
+    assert object["controls"]["inlist_project"]["max_model_number"] == 12000
     with pytest.raises(KeyError):
         object.addValue("dummy","dummy")
 
@@ -95,6 +103,3 @@ def testWriteFile(defaultSetup: MesaFileAccess,value:Tuple[str,str]):
     assert os.path.exists(testWritePath+value[0])
     with open(testWritePath+value[0]) as f:
         assert value[1] == f.read()
-
-
-
