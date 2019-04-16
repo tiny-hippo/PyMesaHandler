@@ -15,6 +15,8 @@ class MesaInlist:
         inlists (list):  List of all the inlists in the directory
         inlist (obj): The MesaAccess object that is used to manipulate
                       the inlists.
+
+    To-do: Change this to work with setting 'extra_star_job_inlist1_name
     """
     def __init__(self):
         self.inlist_name = ''
@@ -23,7 +25,7 @@ class MesaInlist:
                         fname != 'inlist' and 'pgstar' not in fname)])
 
     def prepare_edit(self, inlist_name='inlist'):
-        """ Creates the MesaAcess object that can be used to edit an inlist.
+        """ Creates the MesaAccess object that can be used to edit an inlist.
 
         Args:
         inlist_name (str): Filename of the inlist to be edited
