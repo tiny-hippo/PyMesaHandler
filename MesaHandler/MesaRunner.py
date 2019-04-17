@@ -5,6 +5,7 @@ import glob
 import subprocess
 import datetime
 import numpy as np
+import mesa_reader as mr
 from shutil import copy2, move
 from distutils.dir_util import copy_tree
 from MesaHandler import MesaAccess
@@ -47,12 +48,17 @@ class MesaRunner:
         else:
             self.summary = False
 
-    def run(self):
-        """ Runs either a single inlist or a list of inlists. """
+    def run(self, check_age=True):
+        """ Runs either a single inlist or a list of inlists. 
+        
+        args:
+            check_age (bool): Check whether the output
+                              model has the desired max_age.
+        """
         if(isinstance(self.inlist, list)):
             for ind, item in enumerate(self.inlist):
                 self.last_inlist = item
-                self.run_support(item)
+                self.run_support(item, check_age)
                 self.summary[ind] = self.convergence
                 if not(self.convergence):
                     raise SystemExit('Aborting since', item,
@@ -60,14 +66,17 @@ class MesaRunner:
 
             print('Finished running inlists', self.inlist)
         else:
-            self.run_support(self.inlist)
+            self.run_support(self.inlist, check_age)
 
-    def run_support(self, inlist):
+    def run_support(self, inlist, check_age):
         """ Helper function for running MESA.
 
         args:
             inlist (str): Inlist to run.
+            check_age (bool): Check whether the output
+                              model has the desired max_age.
         """
+
         self.remove_file('inlist')
         self.remove_file('restart_photo')
         copy2(inlist, 'inlist')
@@ -98,18 +107,39 @@ class MesaRunner:
         self.run_time = run_time
         micro_index = run_time.find('.')
 
-        if(os.path.isfile(self.model_name)):
-            print(42 * '%')
-            print('Evolving the star took:',
-                  '{} h:mm:ss'.format(run_time[:micro_index]))
-            print(42 * '%')
-            self.convergence = True
+        if(check_age):
+            if(os.path.isfile(self.profile_name)):
+                md = mr.MesaData(self.profile_name)
+                star_age = md.star_age
+                max_age = ma['max_age']
+
+                if(star_age < max_age):
+                    print(42 * '%')
+                    print('Star age is {:.2E}, while max age is {:.2E}'.format(star_age, max_age))
+                    print('Failed to complete', inlist,
+                          'after {} h:mm:ss'.format(run_time[:micro_index]))
+                    print(42 * '%')
+                    self.convergence = False
+                else:
+                    print(42 * '%')
+                    print('Evolving the star took:',
+                        '{} h:mm:ss'.format(run_time[:micro_index]))
+                    print(42 * '%')
+                    self.convergence = True
+
         else:
-            print(42 * '%')
-            print('Failed to run', inlist,
-                  'after {} h:mm:ss'.format(run_time[:micro_index]))
-            print(42 * '%')
-            self.convergence = False
+            if(os.path.isfile(self.model_name)):
+                print(42 * '%')
+                print('Evolving the star took:',
+                    '{} h:mm:ss'.format(run_time[:micro_index]))
+                print(42 * '%')
+                self.convergence = True
+            else:
+                print(42 * '%')
+                print('Failed to complete', inlist,
+                    'after {} h:mm:ss'.format(run_time[:micro_index]))
+                print(42 * '%')
+                self.convergence = False
 
     def restart(self, photo):
         """ Restarts the run from the given photo.
