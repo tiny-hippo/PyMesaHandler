@@ -95,6 +95,8 @@ class MesaRunner:
             ma['pgstar_flag'] = False
 
         self.remove_file(self.model_name)
+        self.remove_file(self.profile_name)
+        
         start_time = datetime.datetime.now()
         if(os.path.isfile('star')):
             print('Running', inlist)
@@ -126,6 +128,13 @@ class MesaRunner:
                         '{} h:mm:ss'.format(run_time[:micro_index]))
                     print(42 * '%')
                     self.convergence = True
+            else:
+                print(42 * '%')
+                print('Failed to complete', inlist,
+                      'after {} h:mm:ss'.format(run_time[:micro_index]))
+                print(42 * '%')
+                self.convergence = False
+
 
         else:
             if(os.path.isfile(self.model_name)):
