@@ -49,8 +49,8 @@ class MesaRunner:
             self.summary = False
 
     def run(self, check_age=True):
-        """ Runs either a single inlist or a list of inlists. 
-        
+        """ Runs either a single inlist or a list of inlists.
+
         args:
             check_age (bool): Check whether the output
                               model has the desired max_age.
@@ -77,6 +77,8 @@ class MesaRunner:
                               model has the desired max_age.
         """
 
+        # to-do: implement option to store terminal
+        # output in a log file
         self.remove_file('inlist')
         self.remove_file('restart_photo')
         copy2(inlist, 'inlist')
@@ -96,7 +98,7 @@ class MesaRunner:
 
         self.remove_file(self.model_name)
         self.remove_file(self.profile_name)
-        
+
         start_time = datetime.datetime.now()
         if(os.path.isfile('star')):
             print('Running', inlist)
@@ -117,7 +119,8 @@ class MesaRunner:
 
                 if(star_age < max_age):
                     print(42 * '%')
-                    print('Star age is {:.2E}, while max age is {:.2E}'.format(star_age, max_age))
+                    print('Star age is {:.2E}, while max age is {:.2E}'
+                          .format(star_age, max_age))
                     print('Failed to complete', inlist,
                           'after {} h:mm:ss'.format(run_time[:micro_index]))
                     print(42 * '%')
@@ -125,7 +128,7 @@ class MesaRunner:
                 else:
                     print(42 * '%')
                     print('Evolving the star took:',
-                        '{} h:mm:ss'.format(run_time[:micro_index]))
+                          '{} h:mm:ss'.format(run_time[:micro_index]))
                     print(42 * '%')
                     self.convergence = True
             else:
@@ -135,18 +138,17 @@ class MesaRunner:
                 print(42 * '%')
                 self.convergence = False
 
-
         else:
             if(os.path.isfile(self.model_name)):
                 print(42 * '%')
                 print('Evolving the star took:',
-                    '{} h:mm:ss'.format(run_time[:micro_index]))
+                      '{} h:mm:ss'.format(run_time[:micro_index]))
                 print(42 * '%')
                 self.convergence = True
             else:
                 print(42 * '%')
                 print('Failed to complete', inlist,
-                    'after {} h:mm:ss'.format(run_time[:micro_index]))
+                      'after {} h:mm:ss'.format(run_time[:micro_index]))
                 print(42 * '%')
                 self.convergence = False
 
