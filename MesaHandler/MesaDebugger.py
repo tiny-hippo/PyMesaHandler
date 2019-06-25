@@ -11,9 +11,9 @@ class MesaDebugger:
     def __init__(self, name='corr_lnd',
                  dir=join('.', 'plot_data', 'solve_logs'),
                  min_zone=1, max_zone=None):
-        fig = self.make_iter_plot(name, dir=dir,
-                                  min_zone=1, max_zone=None)
-        fig.savefig('corr_lnd.pdf')
+        self.fig = self.make_iter_plot(name, dir=dir,
+                                       min_zone=1, max_zone=None)
+        self.fig.savefig('corr_lnd.pdf')
 
     @staticmethod
     def num_columns_rows(size_file):
