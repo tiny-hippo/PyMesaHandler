@@ -9,4 +9,4 @@ R_jup_pol = 6.6854e+09
 R_jup = 0.5 * (R_jup_eq + R_jup_pol)
 R_sun = 6.9598e+10
 L_sun = 3.828e+33
-sigma_b = 5.6704e-5  # Boltzmann constant 
+sigma_b = 5.6704e-5  # Boltzmann constant

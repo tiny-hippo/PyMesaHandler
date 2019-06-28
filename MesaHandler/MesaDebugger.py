@@ -19,7 +19,6 @@ class MesaDebugger:
         self.fig = self.make_iter_plot(name, dir=dir,
                                        min_zone=min_zone,
                                        max_zone=max_zone)
-        self.fig.savefig(self.name + '.pdf')
 
     @staticmethod
     def num_columns_rows(size_file):
@@ -54,13 +53,13 @@ class MesaDebugger:
         '''
         if max_zone is None:
             max_zone = num_cols
-        data = self.format_data(data_file, num_cols, num_rows)
-        minmax = max([-min(data.flatten()), max(data.flatten())])
+        self.data = self.format_data(data_file, num_cols, num_rows)
+        minmax = max([-min(self.data.flatten()), max(self.data.flatten())])
 
         fig, ax = plt.subplots(1, 1, figsize=(12, 8))
         if title is not None:
             ax.set_title(title)
-        im = ax.imshow(data, aspect='auto', cmap='RdBu',
+        im = ax.imshow(self.data, aspect='auto', cmap='RdBu',
                        origin='lower', extent=(1, num_cols, 1, num_rows),
                        vmin=-minmax, vmax=minmax)
         ax.set_xlabel('Zone')
@@ -92,3 +91,6 @@ class MesaDebugger:
         return self.plot_data(self.data_file, self.num_cols, self.num_rows,
                               min_zone=min_zone,
                               max_zone=max_zone, title=name.replace('_', ' '))
+
+    def save_fig(self):
+        self.fig.savefig(self.name + '.pdf')
