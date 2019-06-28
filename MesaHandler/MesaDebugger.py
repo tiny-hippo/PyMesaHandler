@@ -11,9 +11,15 @@ class MesaDebugger:
     def __init__(self, name='corr_lnd',
                  dir=join('.', 'plot_data', 'solve_logs'),
                  min_zone=1, max_zone=None):
+
+        self.name = name
+        self.dir = dir
+        self.min_zone = min_zone
+        self.max_zone = max_zone
         self.fig = self.make_iter_plot(name, dir=dir,
-                                       min_zone=1, max_zone=None)
-        self.fig.savefig('corr_lnd.pdf')
+                                       min_zone=min_zone,
+                                       max_zone=max_zone)
+        self.fig.savefig(self.name + '.pdf')
 
     @staticmethod
     def num_columns_rows(size_file):
@@ -79,9 +85,10 @@ class MesaDebugger:
         Returns:
             matplotlib.pyplot.figure instance
         '''
-        data_file = join(dir, '{}.log'.format(name))
-        size_file = join(dir, 'size.data')
-        num_cols, num_rows = self.num_columns_rows(size_file)
+        self.data_file = join(dir, '{}.log'.format(name))
+        self.size_file = join(dir, 'size.data')
+        self.num_cols, self.num_rows = self.num_columns_rows(self.size_file)
 
-        return self.plot_data(data_file, num_cols, num_rows, min_zone=min_zone,
+        return self.plot_data(self.data_file, self.num_cols, self.num_rows,
+                              min_zone=min_zone,
                               max_zone=max_zone, title=name.replace('_', ' '))
