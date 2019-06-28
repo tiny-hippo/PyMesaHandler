@@ -71,7 +71,7 @@ class MesaRunner:
     def run_support(self, inlist, check_age):
         """ Helper function for running MESA.
 
-        args:
+        Args:
             inlist (str): Inlist to run.
             check_age (bool): Check whether the output
                               model has the desired max_age.
