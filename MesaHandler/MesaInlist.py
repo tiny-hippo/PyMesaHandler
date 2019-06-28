@@ -40,7 +40,6 @@ class MesaInlist:
         """ Finalizes the editing process by replacing the original file """
         os.replace('inlist', self.inlist_name)
 
-    @staticmethod
     def get_X(self, Z):
         """ Calculates the hydrogen fraction given
             a heavy-element fraction Z and assuming protosolar
@@ -60,7 +59,6 @@ class MesaInlist:
         X = (1 - Z) / (1 + eta)
         return X
 
-    @staticmethod
     def get_Y(self, Z):
         """ Calculates the helium fraction given
             a heavy-element fraction Z and assuming protosolar
