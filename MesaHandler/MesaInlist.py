@@ -39,3 +39,36 @@ class MesaInlist:
     def finish_edit(self):
         """ Finalizes the editing process by replacing the original file """
         os.replace('inlist', self.inlist_name)
+
+    def get_X(self, Z):
+        """ Calculates the hydrogen fraction given
+            a heavy-element fraction Z and assuming protosolar
+            composition.
+
+        Args:
+            Z (float): Heavy-element mass fraction
+
+        Returns:
+            X (float): Hydrogen mass fraction
+
+        """
+        yproto = 0.275  # protosolar helium abundance
+        xproto = 0.705  # protosolar hydrogen abundance
+        eta = yproto / xproto
+
+        X = (1 - Z) / (1 + eta)
+        return X
+
+    def get_Y(self, Z):
+        """ Calculates the helium fraction given
+            a heavy-element fraction Z and assuming protosolar
+            composition.
+
+        Args:
+            Z (float): Heavy-element mass fraction
+
+        Returns:
+            Y (float): Helium mass fraction
+        """
+        X = self.get_X(Z)
+        return (round(1 - Z - X, 3))
