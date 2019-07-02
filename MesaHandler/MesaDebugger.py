@@ -66,6 +66,7 @@ class MesaDebugger:
         ax.set_ylabel('Iteration')
         ax.set_xlim(max_zone, min_zone)
         fig.colorbar(im)
+        fig.tight_layout()
 
         return fig
 

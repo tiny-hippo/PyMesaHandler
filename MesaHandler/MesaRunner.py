@@ -24,6 +24,7 @@ class MesaRunner:
         check (bool): Checks whether the model successfully finished.
         model_name (str): Output model name.
         profile_name (str): Output profile name.
+        history_name (str): Output history name.
     """
 
     def __init__(self, inlist, pgstar=True, pause=True):
@@ -40,6 +41,7 @@ class MesaRunner:
         self.pgstar = pgstar
         self.model_name = ''
         self.profile_name = ''
+        self.history_name = ''
         self.run_time = 0
 
         self.convergence = False
@@ -85,6 +87,7 @@ class MesaRunner:
         ma = MesaAccess()
         self.model_name = ma['save_model_filename']
         self.profile_name = ma['filename_for_profile_when_terminate']
+        self.history_name = ma['star_history_name']
 
         if(self.pause):
             ma['pause_before_terminate'] = True
