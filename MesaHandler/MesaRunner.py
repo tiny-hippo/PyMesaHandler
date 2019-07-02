@@ -86,8 +86,13 @@ class MesaRunner:
         copy2(inlist, 'inlist')
         ma = MesaAccess()
         self.model_name = ma['save_model_filename']
-        self.profile_name = ma['filename_for_profile_when_terminate']
-        self.history_name = ma['star_history_name']
+        try:
+            self.profile_name = ma['filename_for_profile_when_terminate']
+            self.history_name = ma['star_history_name']
+        except KeyError:
+            self.profile_name = ''
+            self.history_name = 'history.data'
+
 
         if(self.pause):
             ma['pause_before_terminate'] = True
