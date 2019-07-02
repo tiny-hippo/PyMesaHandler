@@ -86,6 +86,7 @@ class MesaRunner:
         copy2(inlist, 'inlist')
         ma = MesaAccess()
         self.model_name = ma['save_model_filename']
+        self.profile_name = ma['filename_for_profile_when_terminate']
 
         try:
             self.history_name = ma['star_history_name']
