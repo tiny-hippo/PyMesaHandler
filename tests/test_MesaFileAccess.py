@@ -1,7 +1,7 @@
 import pytest
 from typing import Tuple,List
 
-from MesaHandler import MesaFileAccess
+from MesaHandler import MesaFileAccess, MesaInlist
 from MesaHandler.support import *
 
 import shutil
@@ -88,12 +88,20 @@ def testObject(defaultSetup: MesaFileAccess):
     # additional tests
     object.addValue("x_ctrl(1)", 0.5)
     assert object["controls"]["inlist_project"]["x_ctrl(1)"] == 0.5
+    object["x_ctrl(1)"] = 0.8
+    assert object["controls"]["inlist_project"]["x_ctrl(1)"] == 0.8
     object.addValue("xa_mesh_delta_coeff(1)", 0.75)
     assert object["controls"]["inlist_project"]["xa_mesh_delta_coeff(1)"] == 0.75
     object.addValue("max_model_number", 12000)
     assert object["controls"]["inlist_project"]["max_model_number"] == 12000
     with pytest.raises(KeyError):
         object.addValue("dummy","dummy")
+
+    # MesaInlist testing
+    mi = MesaInlist()
+    mi.prepare_edit('inlist_project')
+    mi.inlist['x_ctrl(1)'] = 3.14
+    assert mi.inlist['x_ctrl(1)'] == 3.14
 
 
 
